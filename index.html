@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+</head>
+
+<body></body>
+
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript">
+//主域名地址【需要修改】
+iwebshopUrl = 'https://www.hanyingshiye.com/';
+
+//进入APP应用
+function enter()
+{
+    api.openFrame({
+        name: 'main',
+        url: iwebshopUrl,
+        progress: {type:'page'}
+    });
+}
+
+apiready = function() {
+    //首次登陆幻灯片
+    var isUserd = api.getPrefs({
+        sync: true,
+        key: 'isUserd'
+    });
+
+    if(isUserd)
+    {
+        enter();
+    }
+    else
+    {
+        api.openFrame({
+            name: 'main',
+            url: './html/guide.html'
+        });
+    }
+
+    //连续按2次关闭程序
+    var mkeyTime = new Date().getTime();
+    api.addEventListener({name: 'keyback'}, function(ret, err)
+    {
+        if((new Date().getTime() - mkeyTime) > 2000)
+        {
+            mkeyTime = new Date().getTime();
+            api.toast({ msg: '再按一次退出程序', duration:2000, location: 'bottom' });
+        }
+        else
+        {
+            api.closeWidget({silent:true});
+        }
+    });
+};
+</script>
+</html>

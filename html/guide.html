@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>引导页</title>
+<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+<link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
+<style>
+html, body {
+    position: relative;
+    height: 100%;
+}
+
+body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color:#000;
+    margin: 0;
+    padding: 0;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+#enter{
+    display: none;
+    position: absolute;
+    bottom: 16%;
+    width: 40%;
+    left: 30%;
+    height: 2.5em;
+    border: 1px solid #3491e9;
+    border-radius: 4px;
+    background: white;
+    color: #3491e9;
+    font-size: 1.2em;
+    z-index: 999;
+}
+
+#enter.active{
+    background: rgba(255, 255, 255, 0.75);
+}
+</style>
+</head>
+<body>
+    <!-- Slider main container -->
+    <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper" id="bannerBox"></div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <button id="enter" onclick="api.execScript({script:'enter()'});">点击进入</button>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/swiper.min.js"></script>
+<script type="text/javascript">
+apiready = function() {
+    //自动判断image/banner下面是否存在引导图:1080*1920
+    var fs = api.require('fs');
+    fs.readDir({
+        path: 'widget://image/banner/'
+    }, function(ret, err) {
+        if (ret.status)
+        {
+            var photoList = ret.data;
+            var html = '';
+            for(var key in photoList)
+            {
+                html += '<div class="swiper-slide"><img src="./../image/banner/'+photoList[key]+'" width="100%" height="100%" /></div>';
+            }
+
+            //如果无引导图则直接进入主程序
+            if(!html)
+            {
+                api.execScript({script:'enter()'});
+                return;
+            }
+
+            //运行幻灯片
+            $api.html($api.byId('bannerBox'),html);
+            var mySwiper = new Swiper ('.swiper-container',
+            {
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+
+                on: {
+                    reachEnd: function(){
+                        window.setTimeout(function(){
+                            $api.css($api.byId('enter'),'display:block;');
+                        },500);
+
+                        //更新已用过
+                        api.setPrefs({
+                            key: 'isUserd',
+                            value: true
+                        });
+                    }
+                }
+            })
+        }
+        else
+        {
+            alert(JSON.stringify(err));
+        }
+    });
+};
+</script>
+</html>

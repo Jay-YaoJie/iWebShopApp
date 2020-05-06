@@ -1,0 +1,47 @@
+ <widget id="A6008159688332"  version="0.0.1">
+    <name>汉赢</name>
+    <description>        iWebShop是一款基于PHP语言及MYSQL数据库开发的B2B2C单用户和多用户开源免费的商城系统，系统支持平台自营和多商家入驻、集成微信商城、手机商城、移动端APP商城、三级分销、微信小程序等于一体，它可以承载大数据量且性能优良，还可以跨平台，界面美观功能丰富是建站首选源码。
+    </description>
+    <author email="846327344@qq.com" href="http://www.aircheng.com">
+        汉赢
+    </author>
+    <content src="index.html" />
+
+    <access origin="*" />
+    <preference name="pageBounce" value="false"/>
+	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+	<preference name="hScrollBarEnabled" value="false"/>
+	<preference name="vScrollBarEnabled" value="false"/>
+	<preference name="autoLaunch" value="true"/>
+	<preference name="fullScreen" value="true"/>
+	<preference name="autoUpdate" value="true" />
+	<preference name="smartUpdate" value="true" />
+	<preference name="debug" value="true"/>
+	<preference name="statusBarAppearance" value="false"/>
+    <preference name="urlScheme" value="iwebshop" />
+    <preference name="userAgent" value="iwebshop_app" />
+    <preference name="checkSslTrusted" value="false" />
+    <preference name="appCertificateVerify" value="false" />
+
+	<permission name="readPhoneState" />
+	<permission name="camera" />
+	<permission name="record" />
+	<permission name="location" />
+	<permission name="fileSystem" />
+	<permission name="internet" />
+	<permission name="bootCompleted" />
+	<permission name="hardware" />
+    <feature name="wx">
+        <param name="urlScheme" value="wx6d84736dd517e41e"/>
+        <param name="apiKey" value="wx6d84736dd517e41e"/>
+        <param name="apiSecret" value="40576148698962ec6c27199737436981"/>
+    </feature>
+
+    <feature name="wxPay">
+        <param name="urlScheme" value="wx6d84736dd517e41e"/>
+        <param name="apiKey" value="wx6d84736dd517e41e"/>
+        <param name="apiSecret" value="40576148698962ec6c27199737436981"/>
+    </feature>
+</widget>
